@@ -1,0 +1,30 @@
+<!--Sign In phase-->
+<div *ngIf="!isLogIn">
+  <form (ngSubmit)="NameGet()">
+    <label>Prihlasenie</label>
+    <br /><br />
+    <label for="myUser">UserName:</label>
+    <br />
+    <input type="text" id="myUser" name="myUser" [(ngModel)]="myUsername" />
+    <br />
+    <label for="myPassword">Password:</label><br />
+    <input
+      type="password"
+      id="myPassword"
+      name="myPassword"
+      [(ngModel)]="myPassword"
+    />
+    <br /><br />
+    <input type="submit" value="Log In" />
+  </form>
+  <br />
+  <button *ngIf="hintButton" (click)="OnHintClick()">Hint</button>
+  <label>{{ hintVisText }}</label>
+</div>
+
+<!--Log Out Phase-->
+<div *ngIf="isLogIn">
+  <label>You are Logged In as {{ targetedUsername }}</label>
+  <br />
+  <button (click)="OnLogOutClick()">Log Out</button>
+</div>

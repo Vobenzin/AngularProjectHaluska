@@ -1,0 +1,66 @@
+<div *ngIf="!addingStudent">
+  <h2>Student List</h2>
+  <input
+    type="text"
+    placeholder="Filter Students"
+    [(ngModel)]="searchQuery"
+    (input)="filterStudents()"
+  />
+  <button
+    [ngClass]="{
+      buttonGreenAddStudent: editedStudent == null,
+      buttonRedAddStudent: editedStudent != null
+    }"
+    (click)="addStudentClick()"
+  >
+    Add Student
+  </button>
+
+  <ul>
+    <div>
+      <li *ngFor="let student of filteredStudents">
+        <div class="border">
+          Name & Surname : {{ student.Name }} {{ student.Surname }} - Birth
+          Date: {{ student.BirthDate }} - GPA: {{ student.GPA }} - Class:
+          {{ student.Class }} - Department: {{ student.Department }} - Sex:
+          {{ student.Sex }} - Info: {{ student.Info }} - Disabled:
+          {{ student.Disabled }} - LastEdit:{{ student.LastEdit }}
+          <br />
+          <app-my-student-form
+            (zdrojStudentEdit)="onStudentEdit($event, student)"
+            [NewStudent]="editedStudent"
+            [AllStudentsNames]="getAllStudentsNames"
+            *ngIf="student.editing"
+          ></app-my-student-form>
+          <button
+            [ngClass]="{
+              buttonGreen: editedStudent == null,
+              buttonRed: editedStudent != null
+            }"
+            *ngIf="!student.editing"
+            (click)="removeStudent(student)"
+          >
+            Remove
+          </button>
+          <button
+            [ngClass]="{
+              buttonGreen: editedStudent == null,
+              buttonRed: editedStudent != null
+            }"
+            *ngIf="!student.editing"
+            (click)="editStudentValue(student)"
+          >
+            Edit
+          </button>
+          <br /><br />
+        </div>
+      </li>
+    </div>
+  </ul>
+</div>
+<div *ngIf="addingStudent" class="AddingStudent">
+  <app-my-student-form
+    (zdrojStudentEdit)="onStudentAdd($event)"
+    [AllStudentsNames]="getAllStudentsNames"
+  ></app-my-student-form>
+</div>
